@@ -1,0 +1,60 @@
+
+image_dir: ./imgs/1.png
+det: true
+rec: false
+use_angle_cls: false
+
+drop_score: 0.5
+
+
+# DB parmas
+det_algorithm:
+  name: DB
+  use_gpu: true
+  model_dir: 2.0_model/det
+  pre_process:
+    DetResizeForTest: 
+      limit_side_len: 960
+      limit_type: max
+    NormalizeImage:
+      std: [0.229, 0.224, 0.225]
+      mean: [0.485, 0.456, 0.406]
+      scale: 1./255.
+      order: hwc
+    ToCHWImage:
+    KeepKeys:
+      keep_keys: ['image', 'shape']
+
+  postprocess:
+    name: DBPostProcess
+    thresh: 0.4
+    box_thresh: 0.5
+    max_candidates: 1000
+    unclip_ratio: 2.0
+    use_dilation: True
+lang:
+  name: ch
+  dict_path: ./ppocr/utils/ppocr_keys_v1.txt
+
+rec_algorithm:
+  name: CRNN
+  use_gpu: true
+  model_dir: 2.0_model/rec/ch
+  rec_image_shape: "3, 32, 320"
+  rec_char_type: ch
+  rec_batch_num: 30
+  max_text_length: 25
+  postprocess:
+    name: CTCLabelDecode
+    character_dict_path: ./dict/ppocr_keys_v1.txt
+    use_space_char: True
+
+text_classifier:
+  use_gpu: true
+  model_dir: 2.0_model/cls
+  cls_image_shape: 3, 48, 192
+  label_list: ['0', '180']
+  cls_batch_num: 30
+  cls_thresh: 0.9
+  postprocess:
+    name: ClsPostProcess
