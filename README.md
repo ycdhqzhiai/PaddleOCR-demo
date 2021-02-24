@@ -4,7 +4,7 @@
 ```shell
 pip install -r requirements.txt
 #修改data params.yaml参数
-python test.jpg
+python test.py
 ```
 ![run demo result](https://github.com/ycdhqzhiai/PaddleOCR-demo/blob/main/result.jpg)
 
