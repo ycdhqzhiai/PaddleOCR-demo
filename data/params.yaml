@@ -1,7 +1,7 @@
 
-image_dir: ./imgs/1.png
+image_dir: ./imgs/11.jpg
 det: true
-rec: false
+rec: true
 use_angle_cls: false
 
 drop_score: 0.5
