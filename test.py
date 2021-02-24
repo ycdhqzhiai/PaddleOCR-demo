@@ -41,5 +41,6 @@ if __name__ == '__main__':
                             rec=data_dict['rec'],
                             cls=data_dict['use_angle_cls'])
     draw_img = draw_result(img, result)
+    cv2.imwrite('result.jpg', draw_img)
     cv2.imshow("img", draw_img)
     cv2.waitKey(0)
